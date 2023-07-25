@@ -54,10 +54,10 @@
 URL: <https://github.com/GeekyVarun/Auth_Service.git>
 
 ## Booking Service
-URL: 
+URL: <https://github.com/GeekyVarun/AirTicketBookingService>
 
 ## Email Service
-URL: 
+URL: <https://github.com/GeekyVarun/ReminderService>
 
 ## Flights Service
 URL: <https://github.com/GeekyVarun/FlightsAndSearchService.git>
