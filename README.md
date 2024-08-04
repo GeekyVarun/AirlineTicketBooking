@@ -9,15 +9,14 @@
 ## Requirements
 - A user should be able to search for flights from one place to another.
     - User should be able to mention the `src` and `dest` details.
-    - User should be able to select the date of journey. _{V2 -> multicity and round trip implementation}_
     - User should be able to select the class of the flights. (Non-mandatory, have some default value)
     - User should be able to select the number of seats. (Non-mandatory, have some default value)
     - List down the flights based on the above data.
     - The best available flights should be shown based on price and least journey time.
     - Need to support pagination so that we can list chunk of flights at one point of time.
     - Filter of flights should be supported based on Price, Departure Time, Arrival time, Journey time, etc. _{V2 -> some more filters}_
-- A user should be able to book a flight considering that user is reisterred on the platform.
-    - Excess luggage addition feature should be supported.
+- A user should be able to book a flight considering that user is registered on the platform.
+    
 - Tracking of the flight prices should be possible; user should be notified for any price drops or any delays. _{V2 -> some more notification service}_
 - For booking, the user has to make a payment. `(dummy)`
 - User should be able to list their previous and upcoming flights.
@@ -34,13 +33,16 @@
 
 
 ## Non-Functional Requirements
-- We can expect that we are going to have more number of flight searches than flight bookings.
-- The system needs to be accurate in terms of booking.(**No Over booking**)
-- _Expect that we will be having approx **1,00,000** total users, **5,00,000** bookings might happen in one quarter._
-- So in one day we can expect _10,000_ bookings.
-- System should be capable of scaling up to atleast 3x the current estimated traffic.
-- The system should handle realtime updates to flight prices, before user makes the final booking.
-- Concurrency should be handled, using RDBMS should be the good solution.
+Non functional Requirements
+1.  We can expect more flight searching than bookings
+2.  The system needs to be reliable in terms of booking
+3.  Expect that we will be having 100k total users.
+4.  100k bookings might come up in quarter
+5.  In one day you might be getting 100 bookings
+6.  System should make sure that we don?t change the prices where the
+    booking payment is going on.
+7.  System should be able to auto scale itself atleast for 3x more traffic.
+
 
 ---
 ![HLD-Design of Flight Booking System](hld-complete.png)
@@ -62,127 +64,6 @@ Collectively, these microservices work together to create a robust flight manage
 - **Sequelize**
 - **RabbitMQ**
 
-
-## Flight Service
-
-## Description
-
-The flight service is a backend project that I have created and implemented micrservices architecture, it is a comprehensive system that manages various aspects of a flight service. 
-
-This Service has several models airplane, airport, city, flight, and seat models for the efficient and organized operation of the flight service.
-
-- The **airplane** model includes essential information such as the **airplane's model Number**, **seating capacity**.
-
-- The **airport** model contains information about each airport, such as its **name**, **location**, **City code**, **address**. This model enables efficient handling of airport-related data like flight scheduling, arrivals, and departures.
-
-- The **city** model represents the cities or locations connected by the flight service. It stores information about each **city name**.
-
-- The **flight** model serves as the core entity within the system, capturing details about individual flights. It contains information such as the **flight number**, **airplaneId**, **departureAirportId** and **arrivalAirportId**, scheduled **departure** and **arrival times**, **price**, **totalSeats** and **boardingGate** assigned to the flight.
-
-- The **seat** model represents the seating arrangements within each airplane. It includes information about **airplaneId**, **row**, **col**, **seatType** (e.g., economy, business, first class). It enables efficient allocation of seats during the booking process.
-
-By integrating these models within our flight service backend project, we have established a robust system that enables effective management of airplanes, airports, cities, flights, and seats.
-
-
-## API Reference
-
-#### Airplane endpoint
-
-```http
-  /api/v1/airplanes
-```
-
-| Parameter | Method   | Body | Description                          |
-| :-------- | :------- |:------- |:-------------------------         |
-| `/` | `GET` |         |Get all Airplanes     |
-| `/{id}` | `GET` |         |Get Airplane by ID     |
-| `/` | `POST` | `modelNumber`, `capacity`       |Create New Airplanes     |
-| `/{id}` | `DELETE` |         |Delete Airplane by ID     |
-| `/{id}` | `PATCH` |  `capacity`       |Update Airplane     |
-
-#### City endpoint
-
-```http
-  /api/v1/cities
-```
-
-| Parameter | Method   | Body | Description                          |
-| :-------- | :------- |:------- |:-------------------------         |
-| `/` | `GET` |         |Get all Cities     |
-| `/` | `POST` | `name`       |Create New City     |
-| `/{id}` | `DELETE` |         |Delete City by ID     |
-| `/{id}` | `PATCH` |  `name`       |Update Airplane     |
-
-#### Airport endpoint
-
-```http
-  /api/v1/airports
-```
-
-| Parameter | Method   | Body | Description                          |
-| :-------- | :------- |:------- |:-------------------------         |
-| `/` | `GET` |         |Get all Airports     |
-| `/{id}` | `GET` |         |Get Airport by ID     |
-| `/` | `POST` | `name`, `cityId`, `code`       |Create New Airport     |
-| `/{id}` | `DELETE` |         |Delete Airport by ID     |
-| `/{id}` | `PATCH` |  `name`, `cityId`, `code` (Min one field required)      |Update Airplane     |
-
-
-#### Flight endpoint
-
-```http
-  /api/v1/flights
-```
-
-| Parameter | Method   | Body | Description                          |
-| :-------- | :------- |:------- |:-------------------------         |
-| `/*[?trip=MUM-DEL]` | `GET` |         |Get all Flights     |
-| `/` | `POST` | `flightNumber`, `airplaneId`, `departureAirportId`, `arrivalAirportId`, `arrivalTime`, `departureTime`, `price`, `totalSeats`, `boardingGate(optional)`       |Create New City     |
-| `/{id}` | `DELETE` |         |Delete Flights by ID     |
-| `/{id}/seats` | `PATCH` |  `seats`, `*[dec]`       |Update Seats     |
-
-
-**Note**
-1. `[ ]` -> Inside this is Optional
-2. if Dec will not be given in the parameter it will decrease the seat by default. if 
-given dec = false it will increase the seats.
-
-3. By Default `\` will fetch all the flights.
-
-Query parameter 
-
-- `trips` -> `MUM-DEL`
-- `price` -> `1200-7000` or `2000`
-- `travellers` -> `2`
-- `tripDate` -> `02-12-23`
-- `sort` -> `departureTime_ASC, price_DESC`
-## Setup the project
-
- - Download this template from github and open it in your favourite text editor. 
- - Go inside the folder path and execute the following command:
-  ```
-  npm install
-  ```
- - In the root directory create a `.env` file and add the following env variables
-    ```
-        PORT=<port number of your choice>
-    ```
-    ex: 
-    ```
-        PORT=3000
-    ```
- - go inside the `src` folder and execute the following command:
-    ```
-      npx sequelize init
-    ```
- - By executing the above command you will get migrations and seeders folder along with a config.json inside the config folder. 
- - If you're setting up your development environment, then write the username of your db, password of your db and in dialect mention whatever db you are using for ex: mysql, mariadb etc
- - If you're setting up test or prod environment, make sure you also replace the host with the hosted db url.
-
- - To run the server execute
- ```
- npm run dev
- ```
 
 ## Authentication Service
 URL: <https://github.com/GeekyVarun/Auth_Service.git>
