@@ -54,7 +54,7 @@ The second microservice, Flight Booking Service, focuses on the booking process 
 
 The third microservice, Flight API Gateway Service, provides a centralized entry point for accessing the flight service's functionalities. It incorporates user and role models for managing user information and permissions. This microservice includes features such as rate limiting to control API usage, reverse proxy for efficient routing, authentication system using JWT (JSON Web Tokens) for user authentication, and an authorization system to ensure access control based on user roles.
 
-The fourth microservice, Flight Notification Service, is responsible for sending notifications to users regarding their flight bookings. Once a booking is successfully processed and confirmed, the second microservice sends the relevant information to a queue. The Flight Notification Service then consumes the messages from the queue and uses Node Mailer to send emails to users, providing them with details about their successful bookings.
+The fourth microservice, Flight Notification Service i.e. Reminder Service, is responsible for sending notifications to users regarding their flight bookings. Once a booking is successfully processed and confirmed, the second microservice sends the relevant information to a queue. The Flight Notification Service then consumes the messages from the queue and uses Node Mailer to send emails to users, providing them with details about their successful bookings.
 
 Collectively, these microservices work together to create a robust flight management system. The Flight Service microservice handles flight-related operations and models, the Flight Booking Service automates booking cancellations and manages booking queues, the Flight API Gateway Service provides a secure and efficient gateway for user interactions, and the Flight Notification Service ensures timely and accurate notifications to users via email.
 ## Tech Stack
@@ -65,14 +65,14 @@ Collectively, these microservices work together to create a robust flight manage
 - **RabbitMQ**
 
 
-## Authentication Service
-URL: <https://github.com/GeekyVarun/Auth_Service.git>
+## Flights Service
+URL: <https://github.com/GeekyVarun/FlightsAndSearchService.git>
 
 ## Booking Service
 URL: <https://github.com/GeekyVarun/AirTicketBookingService>
 
-## Email Service
-URL: <https://github.com/GeekyVarun/ReminderService>
+## Authentication Service
+URL: <https://github.com/GeekyVarun/Auth_Service.git>
 
-## Flights Service
-URL: <https://github.com/GeekyVarun/FlightsAndSearchService.git>
+## Reminder Service
+URL: <https://github.com/GeekyVarun/ReminderService>
