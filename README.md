@@ -43,7 +43,7 @@
 - Concurrency should be handled, using RDBMS should be the good solution.
 
 ---
-![Airline Management System Design](https://i.ibb.co/h2VQHNb/ss1.png)
+![HLD-Design of Flight Booking System](hld-complete.png)
 The Flight Service Backend Project is based on a microservice architecture, comprising four distinct microservices that collectively provide a comprehensive flight management system.
 
 The first microservice, Flight Service, acts as the core component and encompasses multiple models, including airplane, airport, city, flight, and seat models. This microservice handles all the essential functionalities related to flights, airports, and cities. It enables efficient scheduling and allocation of airplanes, manages flight routes and durations, and facilitates seat reservations for passengers.
